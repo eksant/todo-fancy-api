@@ -1,11 +1,6 @@
-.quasar
 .DS_Store
-.thumbs.db
-node_modules
-/dist
-/src-cordova/platforms
-/src-cordova/plugins
-/src-cordova/www
+node_modules/
+/dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

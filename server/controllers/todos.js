@@ -34,29 +34,31 @@ module.exports = {
         data
       })
     })
-    .catch(err => console.error(err))
+    // .catch(err => console.error(err))
+    .catch(err => {
+      res.status(400).json(err.message)
+    })
   },
 
   updateTodo: (req, res) => {
-    Todos.findByIdAndUpdate({ '_id': req.params.id }, {$set: {
+    Todos.findByIdAndUpdate(req.params.id, {
       content : req.body.content,
       status  : req.body.status
-    }})
+    }, { new: true })
     .then(data => {
       res.status(200).json({
         message : 'success update record',
         data
       })
     })
-    .catch(err => console.error(err))
+    .catch(err => console.error(err.message))
   },
 
   updateStatusTodo: (req, res) => {
     Todos.findById({ '_id': req.params.id })
     .then(todo => {
       let updateStatus = todo.status == 0 ? 1 : 0
-      console.log('updateStatus : ', updateStatus)
-
+      // console.log('updateStatus : ', updateStatus)
       Todos.findByIdAndUpdate({ '_id': req.params.id }, {$set: {
         status  : updateStatus
       }})

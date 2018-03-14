@@ -1,28 +1,38 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
+import Todo from '@/components/Todo'
+import Login from '@/components/Login'
 
-import routes from './routes'
+Vue.use(Router)
 
-Vue.use(VueRouter)
-
-const Router = new VueRouter({
-  mode: process.env.VUE_ROUTER_MODE,
-  base: process.env.VUE_ROUTER_BASE,
-  scrollBehavior: () => ({ y: 0 }),
-  routes
+// export default new Router({
+const router = new Router({
+  mode: 'history',
+  routes: [
+    {
+      meta: { auth: true },
+      path: '/',
+      name: 'TodoComponent',
+      component: Todo
+    },
+    {
+      path: '/login',
+      name: 'LoginComponent',
+      component: Login
+    }
+  ]
 })
 
-Router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.auth)) {
     if (localStorage.getItem('token')) {
       next()
     } else {
-      next({ path: '/login' })
-      // next()
+      next({ name: 'LoginComponent' })
     }
   } else {
     next()
   }
 })
 
-export default Router
+export default router

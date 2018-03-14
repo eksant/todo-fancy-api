@@ -1,12 +1,20 @@
 <template>
-  <div id="q-app">
-    <router-view />
+  <div id="app">
+    <navbarcomponent/>
+    <router-view/>
+    <footercomponent/>
   </div>
 </template>
 
 <script>
+import navbarcomponent from '@/components/NavBar'
+import footercomponent from '@/components/Footer'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    navbarcomponent, footercomponent
+  }
 }
 </script>
 
