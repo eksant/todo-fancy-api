@@ -15,24 +15,25 @@ module.exports = {
       delete dataUser.picture
       // console.log('datUser', dataUser)
       Users.findOne(dataUser)
-      .then(userResult => {
-        if (userResult) {
-          jwt.sign({ id: userResult._id, name: userResult.name, email: userResult.email }, process.env.JWT_KEY, (err, token) => {
+      .then(user => {
+        if (user) {
+          jwt.sign({ user }, process.env.JWT_KEY, (err, token) => {
             res.status(200).json({
-              message     : `logged in ${userResult.name}`,
+              message     : `logged in ${user.name}`,              
+              name        : user.name, 
+              email       : user.email,
+              profileUrl  : user.picture,
               apptoken    : token,
-              name        : userResult.name, 
-              email       : userResult.email,
-              profileUrl  : userResult.picture
             })
           })
         } else {
           Users.create(dataUser)
           .then(userCreated => {
-            jwt.sign({ id: userCreated._id, name: userCreated.name, email: userCreated.email }, process.env.JWT_KEY, (err, token) => {
-              res.status(200).json({               
+            let user = userCreated
+            jwt.sign({ user }, process.env.JWT_KEY, (err, token) => {
+              res.status(200).json({                
+                message   : `new user ${user.name}`,
                 apptoken  : token,
-                message   : `new user ${userCreated.name}`
               })
             })
           })

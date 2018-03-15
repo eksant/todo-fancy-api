@@ -64,7 +64,11 @@ export default {
       this.labelTodo = 'Add Your Todo'
       this.todoId = ''
       this.content = ''
-      axios.get(`${url}/todos`).then(response => {
+      axios.get(`${url}/todos`, {
+        headers: {
+          apptoken: localStorage.getItem('token')
+        }
+      }).then(response => {
         // console.log(response.data)
         this.todos = response.data
       }).catch(e => {
@@ -72,7 +76,11 @@ export default {
       })
     },
     getEditTodo (id) {
-      axios.get(`${url}/todos/${id}`).then(response => {
+      axios.get(`${url}/todos/${id}`, {
+        headers: {
+          apptoken: localStorage.getItem('token')
+        }
+      }).then(response => {
         this.isEdit = true
         this.labelTodo = 'Edit Your Todo'
         this.todoId = response.data._id
@@ -83,9 +91,12 @@ export default {
     },
     createTodo () {
       axios.post(`${url}/todos`, {
-        UserId: '5aa556a3dbe580470f768a66',
         content: this.content,
         status: 0
+      }, {
+        headers: {
+          apptoken: localStorage.getItem('token')
+        }
       }).then(response => {
         this.getTodo()
       }).catch(e => {
@@ -96,6 +107,10 @@ export default {
       axios.put(`${url}/todos/${id}`, {
         content: this.content,
         status: 0
+      }, {
+        headers: {
+          apptoken: localStorage.getItem('token')
+        }
       }).then(response => {
         swal('Yooi, Your todo has been updated !', { icon: 'success' })
         this.getTodo()
@@ -104,9 +119,14 @@ export default {
       })
     },
     changeStatus (id) {
-      axios.put(`${url}/todos/changestatus/${id}`).then(response => {
+      axios.put(`${url}/todos/changestatus/${id}`, {
+        headers: {
+          apptoken: localStorage.getItem('token')
+        }
+      }).then(response => {
         swal('Yooi, Your todo has been change status !', { icon: 'success' })
         this.getTodo()
+        // console.log('process')
       }).catch(e => {
         console.log(e)
       })
@@ -120,7 +140,11 @@ export default {
         dangerMode: true
       }).then(action => {
         if (action) {
-          axios.delete(`${url}/todos/${id}`).then(response => {
+          axios.delete(`${url}/todos/${id}`, {
+            headers: {
+              apptoken: localStorage.getItem('token')
+            }
+          }).then(response => {
             swal('Yooi, Your todo has been deleted !', { icon: 'success' })
             this.getTodo()
           }).catch(e => {

@@ -2,7 +2,9 @@ const Todos = require('../models/todos')
 
 module.exports = {
   readTodo: (req, res) => {
-    Todos.find()
+    Todos.find({
+      UserId: req.decoded._id
+    })
     .populate(['UserId'])
     .then(data => {
       res.status(200).json(data) 
@@ -13,6 +15,7 @@ module.exports = {
   readTodoById: (req, res) => {
     Todos.findById(req.params.id)
     .then(data => {
+      // console.log(data)
       if (data) {
         res.status(200).json(data)
       } else {
@@ -24,7 +27,7 @@ module.exports = {
 
   createTodo: (req, res) => {
     Todos.create({
-      UserId  : req.body.UserId,
+      UserId  : req.decoded._id,
       content : req.body.content,
       status  : req.body.status
     })
@@ -55,11 +58,13 @@ module.exports = {
   },
 
   updateStatusTodo: (req, res) => {
-    Todos.findById({ '_id': req.params.id })
+    // console.log('=======================', req.params.id)
+    Todos.findById(req.params.id)
     .then(todo => {
+      // console.log(todo)
       let updateStatus = todo.status == 0 ? 1 : 0
       // console.log('updateStatus : ', updateStatus)
-      Todos.findByIdAndUpdate({ '_id': req.params.id }, {$set: {
+      Todos.findByIdAndUpdate(req.params.id, {$set: {
         status  : updateStatus
       }})
       .then(data => {

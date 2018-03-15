@@ -29,34 +29,6 @@ export default {
       token: localStorage.getItem('token') || null
     }
   },
-  beforeCreate () {
-    // let self = this
-
-    // window.fbAsyncInit = function () {
-    //   window.FB.init({
-    //     appId: '389643448127142',
-    //     cookie: true,
-    //     xfbml: true,
-    //     version: 'v2.12'
-    //   })
-
-    //   window.FB.getLoginStatus(function (response) {
-    //     // console.log('response : ', response)
-    //     if (response.status === 'connected') {
-    //       self.btnLogin = 'Continue With Facebook'
-    //     }
-    //   })
-    // };
-
-    // (function (d, s, id) {
-    //   var js
-    //   var fjs = d.getElementsByTagName(s)[0]
-    //   if (d.getElementById(id)) return
-    //   js = d.createElement(s); js.id = id
-    //   js.src = 'https://connect.facebook.net/en_US/sdk.js'
-    //   fjs.parentNode.insertBefore(js, fjs)
-    // }(document, 'script', 'facebook-jssdk'))
-  },
   methods: {
     getStatusFB () {
       this.loginFB(e => {
