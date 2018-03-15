@@ -15,15 +15,20 @@ import '@/assets/css/style.css'
   fjs.parentNode.insertBefore(js, fjs)
 }(document, 'script', 'facebook-jssdk'))
 
+var isProd = process.env.NODE_ENV
+var ApiFB = !isProd ? '389643448127142' : '213092439268283'
+// console.log(ApiFB)
+
 window.fbAsyncInit = function () {
   window.FB.init({
-    appId: '389643448127142',
+    appId: ApiFB,
     cookie: true,
     xfbml: true,
     version: 'v2.12'
   })
   // window.FB.init(options)
   Vue.FB = window.FB
+  // console.log(env)
 }
 
 Vue.config.productionTip = false
