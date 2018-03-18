@@ -20,7 +20,11 @@
 
 <script>
 import axios from 'axios'
-let url = 'http://localhost:3000/api/users'
+let url = 'http://seorangeksa.com:3000/api/users'
+var LOCAL_DOMAINS = ['localhost', '127.0.0.1']
+if (LOCAL_DOMAINS.includes(window.location.hostname)) {
+  url = 'http://localhost:3000/api/users'
+}
 
 export default {
   data () {
@@ -52,13 +56,13 @@ export default {
           fbtoken: localStorage.getItem('fbtoken')
         }
       }).then(response => {
-        // console.log('data : ', response.data)
+        console.log('data : ', response.data)
         this.token = response.data.apptoken
         localStorage.setItem('token', response.data.apptoken)
         localStorage.setItem('name', response.data.name)
         localStorage.setItem('email', response.data.email)
         localStorage.setItem('profileUrl', response.data.profileUrl)
-        // this.$router.push({ path: '/' })
+        // this.$router.push('/')
         // this.$router.push({ name: 'TodoComponent' })
         window.location.href = '/'
       }).catch(err => console.error(err))

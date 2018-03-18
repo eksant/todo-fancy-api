@@ -40,7 +40,11 @@
 import axios from 'axios'
 import moment from 'moment'
 import swal from 'sweetalert'
-let url = 'http://localhost:3000/api'
+let url = 'http://seorangeksa.com:3000/api'
+var LOCAL_DOMAINS = ['localhost', '127.0.0.1']
+if (LOCAL_DOMAINS.includes(window.location.hostname)) {
+  url = 'http://localhost:3000/api'
+}
 
 export default {
   name: 'Todo',

@@ -15,8 +15,13 @@ import '@/assets/css/style.css'
   fjs.parentNode.insertBefore(js, fjs)
 }(document, 'script', 'facebook-jssdk'))
 
-var isProd = process.env.NODE_ENV
-var ApiFB = !isProd ? '389643448127142' : '213092439268283'
+// var isProd = process.env.NODE_ENV
+// var ApiFB = isProd ? '389643448127142' : '213092439268283'
+var ApiFB = '389643448127142'
+var LOCAL_DOMAINS = ['localhost', '127.0.0.1']
+if (LOCAL_DOMAINS.includes(window.location.hostname)) {
+  ApiFB = '213092439268283'
+}
 // console.log(ApiFB)
 
 window.fbAsyncInit = function () {
