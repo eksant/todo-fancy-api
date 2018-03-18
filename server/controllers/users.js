@@ -12,9 +12,12 @@ module.exports = {
         email   : data.email,
         picture : data.picture.data.url
       }
-      delete dataUser.picture
+      // delete dataUser.picture
       // console.log('datUser', dataUser)
-      Users.findOne(dataUser)
+      Users.findOne({
+        name    : data.name,
+        email   : data.email
+      })
       .then(user => {
         if (user) {
           jwt.sign({ user }, process.env.JWT_KEY, (err, token) => {
@@ -28,14 +31,21 @@ module.exports = {
             })
           })
         } else {
-          Users.create(dataUser)
+          Users.create({
+            name    : data.name,
+            email   : data.email,
+            picture : data.picture.data.url
+          })
           .then(userCreated => {
             let user = userCreated
             jwt.sign({ user }, process.env.JWT_KEY, (err, token) => {
               console.log(user)
               res.status(200).json({                
-                message   : `new user ${user.name}`,
-                apptoken  : token,
+                message     : `new user ${user.name}`,
+                name        : user.name, 
+                email       : user.email,
+                profileUrl  : user.picture,
+                apptoken    : token,
               })
             })
           })
