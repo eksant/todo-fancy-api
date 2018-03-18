@@ -18,6 +18,7 @@ module.exports = {
       .then(user => {
         if (user) {
           jwt.sign({ user }, process.env.JWT_KEY, (err, token) => {
+            console.log(user)
             res.status(200).json({
               message     : `logged in ${user.name}`,              
               name        : user.name, 
@@ -31,6 +32,7 @@ module.exports = {
           .then(userCreated => {
             let user = userCreated
             jwt.sign({ user }, process.env.JWT_KEY, (err, token) => {
+              console.log(user)
               res.status(200).json({                
                 message   : `new user ${user.name}`,
                 apptoken  : token,
